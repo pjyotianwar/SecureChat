@@ -44,7 +44,7 @@ fun RegisterScreen(navController: NavHostController, context: ComponentActivity)
     val emailErrorState = remember { mutableStateOf(false) }
     val passwordErrorState = remember { mutableStateOf(false) }
     val name = remember { mutableStateOf(TextFieldValue(""))}
-    val nameErrorState = remember{ mutableStateOf(false)}
+    val nameErrorState = remember{mutableStateOf(false)}
 
     Column(
         modifier = Modifier

@@ -2,7 +2,9 @@ package com.pjyotianwar.securechat
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -60,18 +62,30 @@ fun MainScreen(context: ComponentActivity, peopleViewModel: PeopleViewModel) {
 
         composable(Routes.Chat.route) {
             ChatScreen(navController = navController, peopleViewModel)
+            BackHandler(true) {
+                Log.d("Back: ", "Back not allowed")
+            }
         }
 
         composable(Routes.Login.route) {
             LoginScreen(navController = navController, context)
+            BackHandler(true) {
+                Log.d("Back: ", "Back not allowed")
+            }
         }
 
         composable(Routes.NewChat.route){
             NewChatScreen(peopleViewModel = peopleViewModel, navController = navController, context)
+            BackHandler(true) {
+                Log.d("Back: ", "Back not allowed")
+            }
         }
 
         composable(Routes.Register.route) {
             RegisterScreen(navController = navController, context)
+            BackHandler(true) {
+                Log.d("Back: ", "Back not allowed")
+            }
         }
 
         composable(Routes.Profile.route+"/{user}") {
@@ -79,10 +93,16 @@ fun MainScreen(context: ComponentActivity, peopleViewModel: PeopleViewModel) {
             if (name != null) {
                 ProfileScreen(navController = navController, context, name)
             }
+            BackHandler(true) {
+                Log.d("Back: ", "Back not allowed")
+            }
         }
         
         composable(Routes.ContactDetail.route){
             ContactDetails(peopleViewModel)
+            BackHandler(true) {
+                Log.d("Back: ", "Back not allowed")
+            }
         }
 
         composable(Routes.ChatDetail.route ) {
@@ -91,6 +111,9 @@ fun MainScreen(context: ComponentActivity, peopleViewModel: PeopleViewModel) {
 //            if (from != null) {
                 ChatDetailScreen(peopleViewModel)
 //            }
+            BackHandler(true) {
+                Log.d("Back: ", "Back not allowed")
+            }
         }
     }
 }
