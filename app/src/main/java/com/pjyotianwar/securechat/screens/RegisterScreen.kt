@@ -179,6 +179,8 @@ fun RegisterScreen(navController: NavHostController, context: ComponentActivity)
 
             Button(modifier = Modifier.fillMaxWidth(),
                 onClick = {
+                    if (!Patterns.EMAIL_ADDRESS.matcher(email.value.text).matches())
+                        emailErrorState.value =true
                     if (password.value.text.length < 6) {
                         passwordErrorState.value = true
                     } else
