@@ -18,7 +18,7 @@ fun encrypt(data: String, password_text: String = "asdfgh"): String? {
 
 @Throws(Exception::class)
 fun decrypt(data: String?, password_text: String = "asdfgh"): String {
-    val key = generateKey(password_text!!)
+    val key = generateKey(password_text)
 //    Log.d("Decrypt", "encrypt key:" + key.toString())
     val c = Cipher.getInstance("AES/ECB/PKCS5Padding")
     c.init(Cipher.DECRYPT_MODE, key)

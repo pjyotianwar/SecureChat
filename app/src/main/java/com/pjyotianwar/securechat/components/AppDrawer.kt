@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -104,7 +103,8 @@ private fun DrawerMenuItem(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(16.dp).fillMaxWidth()
+            .padding(16.dp)
+            .fillMaxWidth()
             .clickable { onClick() }
     ) {
         Icon(
@@ -119,6 +119,5 @@ private fun DrawerMenuItem(
             text = text,
             fontWeight = FontWeight.Medium
         )
-
     }
 }

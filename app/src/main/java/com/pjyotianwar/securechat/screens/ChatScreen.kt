@@ -46,12 +46,17 @@ fun ChatScreen(navController: NavHostController, peopleViewModel: PeopleViewMode
         topBar = {
             TopAppBar(
                 title = { Text(text = "Secure Chat") },
-                actions = { Icon(Icons.Default.Logout, contentDescription = null, modifier = Modifier.clickable {
-                    Firebase.auth.signOut()
-                    navController.navigate(Routes.Login.route){
-                        popUpToRoute
+                actions = {
+                    IconButton(onClick = {
+                        Firebase.auth.signOut()
+                        navController.navigate(Routes.Login.route){
+                            popUpToRoute
+                        }
+                        peopleViewModel.signOut()
+                    }) {
+                        Icon(Icons.Default.Logout, contentDescription = null)
                     }
-                peopleViewModel.signOut()})},
+                          },
                 navigationIcon = { IconButton(onClick = {
                     coroutineScope.launch {
                         scaffoldState.drawerState.open()

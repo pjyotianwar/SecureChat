@@ -54,16 +54,19 @@ class PeopleViewModel : ViewModel() {
     }
 
     fun fetchSender(): Persons{
+        loadUsers()
         var p = Persons()
         myref.child("${Firebase.auth.uid}").get().addOnSuccessListener {
+            Log.v("People fetchSender", "${it}")
             for (i in it.children)
                 p = it.getValue(Persons::class.java)!!
-//            Log.v("People fetchSender", "${p.displayName}")
+            Log.v("People fetchSender", "${p.displayName}")
         }
         return p
     }
 
     fun findSender(): Persons{
+        loadUsers()
         var ind = 0
         for (p in persons){
             if (p.uid == Firebase.auth.uid){
@@ -80,11 +83,14 @@ class PeopleViewModel : ViewModel() {
     }
 
     private fun loadUsers() {
+        Log.d("loadUsers", "")
         myref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot){
                 persons.clear()
+                Log.v("loadUsers", "$snapshot")
                 for (user in snapshot.children) {
                     val u = user.getValue(Persons::class.java)
+                    Log.v("loadUsers", "$u")
                     persons.add(u!!)
                 }
             }

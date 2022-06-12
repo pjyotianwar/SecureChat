@@ -99,7 +99,7 @@ fun MainScreen(context: ComponentActivity, peopleViewModel: PeopleViewModel) {
         }
         
         composable(Routes.ContactDetail.route){
-            ContactDetails(peopleViewModel)
+            ContactDetails(peopleViewModel, navController)
             BackHandler(true) {
                 Log.d("Back: ", "Back not allowed")
             }

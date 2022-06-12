@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -26,7 +26,11 @@ import com.pjyotianwar.securechat.models.Persons
 import com.pjyotianwar.securechat.viewModel.PeopleViewModel
 
 @Composable
-fun NewChatScreen(peopleViewModel: PeopleViewModel, navController: NavHostController, context: ComponentActivity) {
+fun NewChatScreen(
+    peopleViewModel: PeopleViewModel,
+    navController: NavHostController,
+    context: ComponentActivity
+) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -46,7 +50,7 @@ private fun NewChatAppBar() {
 
     TopAppBar(
         title = {
-            Column(Modifier.padding( 16.dp)) {
+            Column(Modifier.padding(16.dp)) {
                 Text(text = "New Chat", fontSize = 16.sp, fontWeight = FontWeight.Bold)
             }
         },
@@ -59,7 +63,11 @@ private fun NewChatAppBar() {
 }
 
 @Composable
-fun NewChatList( personList: List<Persons>, navController: NavHostController, onItemClicked: (Int)->Unit) {
+fun NewChatList(
+    personList: List<Persons>,
+    navController: NavHostController,
+    onItemClicked: (Int) -> Unit
+) {
 
     Log.v("in NewChatList", "${personList.size}")
 
@@ -69,7 +77,8 @@ fun NewChatList( personList: List<Persons>, navController: NavHostController, on
             Surface(
                 modifier = Modifier.clickable {
                     onItemClicked(index)
-                    navController.navigate(Routes.ChatDetail.route)}//+ "/${1}") }
+                    navController.navigate(Routes.ChatDetail.route)
+                }//+ "/${1}") }
             ) {
                 NewChatItem(personList[index])
             }
@@ -83,7 +92,8 @@ fun NewChatItem(person: Persons) {
         modifier = Modifier
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically)
+        verticalAlignment = Alignment.CenterVertically
+    )
     {
         Image(
             painter = rememberImagePainter(
@@ -95,7 +105,7 @@ fun NewChatItem(person: Persons) {
                 .size(56.dp)
                 .aspectRatio(1f)
         )
-        
+
         Spacer(modifier = Modifier.width(8.dp))
 
         Text(person.displayName.toString(), fontWeight = FontWeight.Bold, fontSize = 20.sp)

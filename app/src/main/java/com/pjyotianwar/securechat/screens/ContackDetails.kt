@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -13,12 +14,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.pjyotianwar.securechat.Router
+import com.pjyotianwar.securechat.Routes
 import com.pjyotianwar.securechat.viewModel.PeopleViewModel
 
 @Composable
-fun ContactDetails(peopleViewModel: PeopleViewModel){
+fun ContactDetails(peopleViewModel: PeopleViewModel, navController: NavHostController) {
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
@@ -33,10 +36,11 @@ fun ContactDetails(peopleViewModel: PeopleViewModel){
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                },
-                navigationIcon = {
+            TopAppBar {
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     IconButton(
                         onClick = {
 //                            peopleViewModel.onBack()
@@ -45,29 +49,46 @@ fun ContactDetails(peopleViewModel: PeopleViewModel){
                     ) {
                         Icon(Icons.Default.ArrowBack, contentDescription = null)
                     }
+
+                    Text(text = "$name")
+                    Row(modifier = Modifier.fillMaxWidth()) {
+                        IconButton(
+                            onClick = {
+                                navController.navigate(Routes.Profile.route+"/${name.trim()}"){
+                                    popUpToRoute
+                                }
+                            }
+                        ) {
+                            Icon(Icons.Default.Edit, contentDescription = null)
+                        }
+                    }
                 }
-            )
+            }
         }, scaffoldState = scaffoldState, modifier = Modifier.fillMaxSize(1f)
     ) {
 
-        Column() {
-            Box() {
+        Column {
+            Box {
                 Image(
                     painter = rememberImagePainter(
                         data = uri.toUri(),
-                        builder = { transformations(
+                        builder = {
+                            transformations(
 //                        CircleCropTransformation()
-                        ) }
+                            )
+                        }
                     ),
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
                         .aspectRatio(1f)
                 )
-                Column(modifier = Modifier
-                    .padding(16.dp)
-                    .align(Alignment.BottomStart)) {
-                    
+                Column(
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .align(Alignment.BottomStart)
+                ) {
+
                 }
 
             }

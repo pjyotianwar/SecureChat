@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -42,13 +42,19 @@ fun ChatDetailScreen(peopleViewModel: PeopleViewModel) {
             Box(Modifier.defaultMinSize(minHeight = 1.dp)) {
                 /* sheet content */
             }
-
         },
         sheetShape = BottomSheetShapes.medium,
         content = {
             Scaffold(
                 topBar = { ChatDetailAppBar(peopleViewModel) },
-                bottomBar = { ChatDetailBottomBar(bottomState, peopleViewModel.msg.value, peopleViewModel::changeMsg, peopleViewModel::onSendButtonClicked) },
+                bottomBar = {
+                    ChatDetailBottomBar(
+                        bottomState,
+                        peopleViewModel.msg.value,
+                        peopleViewModel::changeMsg,
+                        peopleViewModel::onSendButtonClicked
+                    )
+                },
                 content = { ChatDetailBody(peopleViewModel) }
             )
         }
@@ -64,8 +70,12 @@ private fun ChatDetailAppBar(peopleViewModel: PeopleViewModel) {
 
     TopAppBar(
         title = {
-            Row(Modifier.padding(vertical = 4.dp).clickable {
-                router.navigate(Routes.ContactDetail.route) }) {
+            Row(
+                Modifier
+                    .padding(vertical = 4.dp)
+                    .clickable {
+                        router.navigate(Routes.ContactDetail.route)
+                    }) {
 
                 Image(
                     painter = rememberImagePainter(
@@ -78,7 +88,11 @@ private fun ChatDetailAppBar(peopleViewModel: PeopleViewModel) {
                         .aspectRatio(1f)
                 )
                 Column(Modifier.padding(start = 16.dp)) {
-                    Text(text = persons.displayName.toString(), fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        text = persons.displayName.toString(),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                     Spacer(modifier = Modifier.height(1.dp))
                     Text(
                         text = "Last screen recently",
@@ -91,7 +105,8 @@ private fun ChatDetailAppBar(peopleViewModel: PeopleViewModel) {
         navigationIcon = {
             IconButton(onClick = {
                 peopleViewModel.onBack()
-                router.navigateUp() }) {
+                router.navigateUp()
+            }) {
                 Icon(Icons.Default.ArrowBack, contentDescription = null)
             }
         }
@@ -118,7 +133,12 @@ private fun ChatDetailBody(peopleViewModel: PeopleViewModel) {
 
 @ExperimentalMaterialApi
 @Composable
-private fun ChatDetailBottomBar(bottomSheetState: ModalBottomSheetState, text: TextFieldValue, onTextChanged: (TextFieldValue)-> Unit, onSendButtonClicked: ()-> Unit) {
+private fun ChatDetailBottomBar(
+    bottomSheetState: ModalBottomSheetState,
+    text: TextFieldValue,
+    onTextChanged: (TextFieldValue) -> Unit,
+    onSendButtonClicked: () -> Unit
+) {
     val coroutineScope = rememberCoroutineScope()
 
     Row(
@@ -140,14 +160,21 @@ private fun ChatDetailBottomBar(bottomSheetState: ModalBottomSheetState, text: T
         )
 
         IconButton(
-            onClick =  {
-                onSendButtonClicked() },
+            onClick = {
+                onSendButtonClicked()
+            },
             enabled = !text.text.isEmpty(),
             content = {
-                Icon(Icons.Outlined.ArrowForward,
-                    tint = if(text.text.isEmpty()){MaterialTheme.colors.background}else{MaterialTheme.colors.secondaryVariant},
+                Icon(
+                    Icons.Outlined.ArrowForward,
+                    tint = if (text.text.isEmpty()) {
+                        MaterialTheme.colors.background
+                    } else {
+                        MaterialTheme.colors.secondaryVariant
+                    },
                     modifier = Modifier.padding(8.dp),
-                    contentDescription = null)
+                    contentDescription = null
+                )
             }
         )
     }
