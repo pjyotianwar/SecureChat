@@ -182,7 +182,8 @@ fun RegisterScreen(navController: NavHostController, context: ComponentActivity)
                     if (password.value.text.length < 6) {
                         passwordErrorState.value = true
                     } else
-                        if (Patterns.EMAIL_ADDRESS.matcher(email.value.text).matches())
+                        if (Patterns.EMAIL_ADDRESS.matcher(email.value.text).matches()){
+                            emailErrorState.value = true
                             when {
                                 email.value.text.isEmpty() -> {
                                     emailErrorState.value = true
@@ -224,6 +225,7 @@ fun RegisterScreen(navController: NavHostController, context: ComponentActivity)
                                         }
                                 }
                             }
+                        }
                     else
                         Toast.makeText(context, "Recheck entered values", Toast.LENGTH_SHORT).show()
                 }

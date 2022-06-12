@@ -1,5 +1,6 @@
 package com.pjyotianwar.securechat.screens
 
+import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.Image
@@ -144,30 +145,39 @@ fun LoginScreen(navController: NavHostController, context: ComponentActivity) {
 
             Button(modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    when {
-                        email.value.text.isEmpty() -> {
-                            emailErrorState.value = true
-                        }
-                        password.value.text.isEmpty() -> {
-                            passwordErrorState.value = true
-                        }
-                        else -> {
-                            passwordErrorState.value = false
-                            emailErrorState.value = false
-
-                            Firebase.auth.signInWithEmailAndPassword(email.value.text.trim(), password.value.text.trim())
-                                .addOnCompleteListener(context) { task ->
-                                    if (task.isSuccessful) {
-                                        navController.navigate(Routes.Chat.route){
-                                            popUpToRoute
-                                        }
-                                    }
-                                    else {
-                                        Toast.makeText(context, "Invalid mail ID or password.", Toast.LENGTH_SHORT).show()
-                                    }
-                                }
-                        }
+                    if (password.value.text.length<6){
+                        passwordErrorState.value = true
                     }
+                    else
+                        if (Patterns.EMAIL_ADDRESS.matcher(email.value.text).matches()){
+                            emailErrorState.value = true
+                            when {
+                                email.value.text.isEmpty() -> {
+                                    emailErrorState.value = true
+                                }
+                                password.value.text.isEmpty() -> {
+                                    passwordErrorState.value = true
+                                }
+                                else -> {
+                                    passwordErrorState.value = false
+                                    emailErrorState.value = false
+
+                                    Firebase.auth.signInWithEmailAndPassword(email.value.text.trim(), password.value.text.trim())
+                                        .addOnCompleteListener(context) { task ->
+                                            if (task.isSuccessful) {
+                                                navController.navigate(Routes.Chat.route){
+                                                    popUpToRoute
+                                                }
+                                            }
+                                            else {
+                                                Toast.makeText(context, "Invalid mail ID or password.", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                }
+                            }
+                        }
+                    else
+                            Toast.makeText(context, "Recheck entered values", Toast.LENGTH_SHORT).show()
                 }
             )
             {
@@ -185,10 +195,6 @@ fun LoginScreen(navController: NavHostController, context: ComponentActivity) {
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    if (password.value.text.length<6){
-                        passwordErrorState.value = true
-                    }
-                    else
                     navController.navigate(Routes.Register.route){
                         popUpToRoute
                     }
