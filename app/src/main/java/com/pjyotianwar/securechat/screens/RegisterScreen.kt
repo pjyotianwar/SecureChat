@@ -172,7 +172,7 @@ fun RegisterScreen(navController: NavHostController, context: ComponentActivity)
             )
 
             if (passwordErrorState.value) {
-                Text(text = "Required", color = Color.Red)
+                Text(text = "Required length 6 minimum", color = Color.Red)
             }
 
             Spacer(modifier = Modifier.padding(16.dp))
