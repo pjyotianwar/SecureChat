@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -177,7 +178,8 @@ fun RegisterScreen(navController: NavHostController, context: ComponentActivity)
 
             Spacer(modifier = Modifier.padding(16.dp))
 
-            Button(modifier = Modifier.fillMaxWidth(),
+            Button(modifier = Modifier.fillMaxWidth(.5f),
+                shape = RoundedCornerShape(12.dp),
                 onClick = {
                     if (!Patterns.EMAIL_ADDRESS.matcher(email.value.text).matches())
                         emailErrorState.value =true
@@ -234,7 +236,7 @@ fun RegisterScreen(navController: NavHostController, context: ComponentActivity)
                 }
             )
             {
-                Text(text = "Register")
+                Text(text = "Register", fontSize = 24.sp)
             }
 
             Spacer(modifier = Modifier.padding(12.dp))
@@ -248,10 +250,11 @@ fun RegisterScreen(navController: NavHostController, context: ComponentActivity)
             Spacer(modifier = Modifier.padding(12.dp))
 
             Button(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(.5f),
+                shape = RoundedCornerShape(12.dp),
                 onClick = { navController.navigate(Routes.Login.route) })
             {
-                Text(text = "Login")
+                Text(text = "Login", fontSize = 24.sp)
             }
         }
     }
